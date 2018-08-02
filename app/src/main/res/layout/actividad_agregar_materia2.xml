@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#434546"
+    android:orientation="vertical"
+    android:scrollbarAlwaysDrawVerticalTrack="true">
+    android:label="un dia";
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+
+        android:background="#fff"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/materia_input"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/icon_materia"
+                    android:singleLine="true"
+                    android:layout_marginTop="16dp"
+                    android:hint="Materia"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/hora_input"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:singleLine="true"
+                    android:drawableLeft="@drawable/icon_reloj"
+                    android:hint="Hora"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/aula_input"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:singleLine="true"
+                    android:drawableLeft="@drawable/icon_aula"
+                    android:hint="Aula"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/agregados_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:paddingTop="5dp"
+                android:text="agregados: 0" />
+
+            <Button
+                android:id="@+id/agregar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22dp"
+                android:layout_marginRight="22dp"
+                android:layout_marginTop="10dp"
+                android:background="#2f9c5f"
+                android:text="Agregar"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/aceptar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22dp"
+                android:layout_marginRight="22dp"
+                android:layout_marginTop="10dp"
+                android:background="#4054b9"
+                android:text="Aceptar"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
