@@ -29,13 +29,13 @@ public class Actividad1 extends AppCompatActivity{//dia especifico de la semana
         datos=new registro(this);
         parametro=getIntent().getExtras();
         diaEspecifico=parametro.getString("AcConSecDia2134");
-        cargarListaElementos();
         buttonAdd=findViewById(R.id.agregarNuevo);
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 accionButtonCrear();
             }
         });
+        cargarListaElementos();
     }
     private void accionButtonCrear(){
         //Actividad1.this.startActivity(new Intent(Actividad1.this,Actividad2.class));

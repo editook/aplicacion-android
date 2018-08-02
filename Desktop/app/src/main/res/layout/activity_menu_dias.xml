@@ -4,10 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.edu.freelancer.horaryumss.Actividad1">
 
     <ListView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/Lista_de_Datos_dia"
+        android:focusable="true"
+        app:layout_collapseParallaxMultiplier="1.0"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     <android.support.design.widget.CoordinatorLayout

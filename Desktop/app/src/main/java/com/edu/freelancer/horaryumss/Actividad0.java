@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -20,25 +21,30 @@ import java.io.IOException;
 public class Actividad0 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     registro datos;
     private CircleMenu circleMenu;
+    ListView listaELementos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //configuraciones de esta actividad
         setContentView(R.layout.activity_actividad0);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        listaELementos=findViewById(R.id.Lista_de_Datos_Principal);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView =  findViewById(R.id.nav_view);
+
         setSupportActionBar(toolbar);
         //configuracion Aplicacion
         datos=new registro(this);
-        cargarListaElementos();
 
         //configuraciones de panel izquierdo
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView =  findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this);
+        cargarListaElementos();
         menu_opciones();
 
 
@@ -56,6 +62,7 @@ public class Actividad0 extends AppCompatActivity implements NavigationView.OnNa
                 .setOnMenuSelectedListener(new OnMenuSelectedListener() {
                     @Override
                     public void onMenuSelected(int index) {
+                        Log.println(Log.DEBUG,"dia actual ",datos.solucion.getDia_porValor(index));
                         Intent actividad=new Intent(Actividad0.this,Actividad1.class);
                         actividad.putExtra("AcConSecDia2134",datos.solucion.getDia_porValor(index));
                         startActivity(actividad);
@@ -64,10 +71,11 @@ public class Actividad0 extends AppCompatActivity implements NavigationView.OnNa
                 });
     }
     private void cargarListaElementos(){
-        datos.cargarDatos_por_semana1();
-        ListView listaELementos=(ListView)findViewById(R.id.Lista_de_Datos);
+        datos.cargarDatos_por_semana();
+
         Lista_Elementos LE=new Lista_Elementos(this,datos.getlista_materias(),datos.getlista_horas(),datos.getlista_imagenes(),datos.getlista_aulas(),datos.getlista_dias());
         listaELementos.setAdapter(LE);
+
     }
     @Override
     public void onBackPressed() {

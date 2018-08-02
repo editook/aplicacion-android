@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import java.util.Calendar;
 
 public class Actividad2 extends AppCompatActivity {
     EditText materia_entrada;
+    TextView agregados;
     EditText aula_entrada;
     EditText hora_entrada;
     Button aceptar,agregar;
@@ -31,6 +33,7 @@ public class Actividad2 extends AppCompatActivity {
         materia_entrada=findViewById(R.id.materia_input);
         aula_entrada=findViewById(R.id.aula_input);
         hora_entrada=findViewById(R.id.hora_input);
+        agregados=findViewById(R.id.agregados_input);
         agregar=findViewById(R.id.agregar);
         aceptar=findViewById(R.id.aceptar);
         data=new registro(this);
@@ -69,6 +72,7 @@ public class Actividad2 extends AppCompatActivity {
                         materia_entrada.setText("");
                         hora_entrada.setText("");
                         aula_entrada.setText("");
+                        agregados.setText("Agregados : "+listaElementos.size());
                         Toast.makeText(Actividad2.this,"Se agrego una nueva materia", Toast.LENGTH_SHORT).show();
                     }
                     else{//machine learning
