@@ -44,7 +44,7 @@ public class Lista_Elementos extends ArrayAdapter<String>{
         else{
             folder =(folder_vista) salida.getTag();
         }
-        folder.imagen.setImageResource(listaImagen[pos]);
+        folder.imagen.setImageResource(R.drawable.a);//modificar
         folder.materia.setText(listaMaterias[pos]);
         folder.aula.setText(listaAulas[pos]);
         folder.hora.setText(listaHoras[pos]);

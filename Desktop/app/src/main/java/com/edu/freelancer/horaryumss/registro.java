@@ -4,6 +4,7 @@ package com.edu.freelancer.horaryumss;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -144,5 +145,31 @@ public class registro {
     }
     public Integer[]getlista_imagenes(){
         return listaImagenes.toArray(new Integer[tamanio]);
+    }
+
+    public void registrarClases(ArrayList<String> listaElementos,String dia) {
+        try {
+            OutputStreamWriter archivo=new OutputStreamWriter(Actividad.openFileOutput(dia,Context.MODE_PRIVATE));
+            String []datos;
+            String formateo;
+            if(archivo!=null){
+                for (int i=0;i<listaElementos.size();i++){
+                    //guardar con Mayuscula
+                    datos=listaElementos.get(i).split(";");
+                    formateo=solucion.Mayuscula_guardar(datos);
+                    archivo.write(formateo+"\n");
+                }
+                archivo.close();
+            }
+        }
+        catch (Exception e){
+
+        }
+
+    }
+
+    public boolean expresionDatos(String m, String h, String a) {
+
+        return true;
     }
 }

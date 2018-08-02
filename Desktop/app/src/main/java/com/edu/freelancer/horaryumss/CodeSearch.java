@@ -51,11 +51,31 @@ public class  CodeSearch {
         String dato=nombreMateria.charAt(0)+"";
         return mapeoMateria.get(dato);
     }
-    public String Mayuscula_guardar(String nombreMateria){//mayuscula y minuscula la palabra(antes de guardar)
+    public String Mayuscula_guardar(String[] datos){//mayuscula y minuscula la palabra(antes de guardar)
+        String nombreMateria=datos[0];
+        String nombrehora=datos[1];
+        String nombreAula=datos[2];
+        //materia
         String mayuscula=nombreMateria.charAt(0)+"";
         String minuscula=nombreMateria.substring(1,nombreMateria.length());
         mayuscula=mayuscula.toUpperCase();
-        return mayuscula+minuscula;
+        mayuscula=mayuscula+minuscula;
+        //hora
+        mayuscula=mayuscula+";";
+        for (int i=0;i<nombrehora.length();i++){
+            if(nombrehora.charAt(i)!=' '){//mejorar
+                mayuscula=mayuscula+nombrehora.charAt(i);
+            }
+        }
+        //aula
+        mayuscula=mayuscula+";";
+        for (int i=0;i<nombreAula.length();i++){
+            if(nombreAula.charAt(i)!=' '){//mejorar
+                mayuscula=mayuscula+nombreAula.charAt(i);
+            }
+        }
+
+        return mayuscula;
     }
     public String getDia_porValor(int clave){//menu dias actividad 0 a actividad 1
         return mapeoDias.get(clave);

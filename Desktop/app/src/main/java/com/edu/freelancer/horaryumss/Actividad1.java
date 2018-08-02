@@ -20,16 +20,16 @@ public class Actividad1 extends AppCompatActivity{//dia especifico de la semana
 
     registro datos;
     private FloatingActionButton buttonAdd;
+    private Bundle parametro;
+    private String diaEspecifico;
     @Override
     protected void onCreate(Bundle instancia){
         super.onCreate(instancia);
         setContentView(R.layout.activity_menu_dias);
         datos=new registro(this);
-        Bundle parametro=getIntent().getExtras();
-
-
-
-        cargarListaElementos(parametro.getString("AcConSecDia2134"));
+        parametro=getIntent().getExtras();
+        diaEspecifico=parametro.getString("AcConSecDia2134");
+        cargarListaElementos();
         buttonAdd=findViewById(R.id.agregarNuevo);
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -38,16 +38,14 @@ public class Actividad1 extends AppCompatActivity{//dia especifico de la semana
         });
     }
     private void accionButtonCrear(){
-        Actividad1.this.startActivity(new Intent(Actividad1.this,Actividad2.class));
-    }
-    public void abrirSeccion(String diaSeleccionado){
-        Intent actividad=new Intent(Actividad1.this,Actividad0.class);
-        actividad.putExtra("AcConSecDia2134",diaSeleccionado);
+        //Actividad1.this.startActivity(new Intent(Actividad1.this,Actividad2.class));
+        Intent actividad=new Intent(Actividad1.this,Actividad2.class);
+        actividad.putExtra("AcConSecDia2134",diaEspecifico);
         startActivity(actividad);
 
     }
-    private void cargarListaElementos(String dia){
-        datos.cargar_datos_por_dia(dia);
+    private void cargarListaElementos(){
+        datos.cargar_datos_por_dia(diaEspecifico);
         ListView listaELementos=findViewById(R.id.Lista_de_Datos_dia);
         Lista_Elementos LE=new Lista_Elementos(this,datos.getlista_materias(),datos.getlista_horas(),datos.getlista_imagenes(),datos.getlista_aulas(),datos.getlista_dias());
         listaELementos.setAdapter(LE);
