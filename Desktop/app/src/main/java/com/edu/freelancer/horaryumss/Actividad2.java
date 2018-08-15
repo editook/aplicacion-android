@@ -95,6 +95,7 @@ public class Actividad2 extends AppCompatActivity {
                     final Calendar calendario=Calendar.getInstance();
                     hora=calendario.get(Calendar.DAY_OF_MONTH);
                     min=calendario.get(Calendar.MINUTE);
+                    hora_entrada.setFocusable(false);
                     TimePickerDialog alert=new TimePickerDialog(Actividad2.this, new TimePickerDialog.OnTimeSetListener() {
 
                         @Override
@@ -102,7 +103,9 @@ public class Actividad2 extends AppCompatActivity {
                             hora_entrada.setText(hourOfDay+":"+minute);
                         }
                     },hora,min,false);
+
                     alert.show();
+                    hora_entrada.setFocusable(true);
                 }
             }
         });

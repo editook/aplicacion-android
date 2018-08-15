@@ -36,7 +36,7 @@ public class registro {
     public void cargar_datos_por_dia(String dia){//solo de un dia es especial
         String nombre_dia=dia;
         String dato_lectura;
-        Log.println(Log.DEBUG,"dia ",nombre_dia);
+        //Log.println(Log.DEBUG,"dia ",nombre_dia);
         try {
             InputStreamReader archivo=new InputStreamReader(Actividad.openFileInput(nombre_dia));
             BufferedReader leer=new BufferedReader(archivo);
@@ -121,10 +121,22 @@ public class registro {
     }
 
     public void registrarClases(ArrayList<String> listaElementos,String dia) {
+        ArrayList<String>nuevaLista=new ArrayList<>();
+        cargar_datos_por_dia(dia);
+        for(int i=0;i<listaMaterias.size();i++){
+            nuevaLista.add(listaMaterias.get(i)+";"+listahoras.get(i)+";"+listaAulas.get(i));
+        }
         try {
             OutputStreamWriter archivo=new OutputStreamWriter(Actividad.openFileOutput(dia,Context.MODE_PRIVATE));
             String []datos;
             String formateo;
+            if(!nuevaLista.isEmpty()){//copiando datos existentes
+                for(int i=0;i<nuevaLista.size();i++){
+                    datos=listaElementos.get(i).split(";");
+                    formateo=solucion.Mayuscula_guardar(datos);
+                    archivo.write(formateo+"\n");
+                }
+            }
             if(archivo!=null){
                 for (int i=0;i<listaElementos.size();i++){
                     //guardar con Mayuscula
@@ -132,8 +144,8 @@ public class registro {
                     formateo=solucion.Mayuscula_guardar(datos);
                     archivo.write(formateo+"\n");
                 }
-                archivo.close();
             }
+            archivo.close();
         }
         catch (Exception e){
 
