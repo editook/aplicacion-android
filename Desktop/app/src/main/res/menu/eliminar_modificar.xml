@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.edu.freelancer.horaryumss.Actividad1">
+    <item
+        android:id="@+id/modificar"
+        android:orderInCategory="100"
+        android:title="Modificar"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_menu_share"/>
+    <item
+        android:id="@+id/eliminar"
+        android:orderInCategory="100"
+        android:title="Eliminar"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_menu_send"/>
+</menu>

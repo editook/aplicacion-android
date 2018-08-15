@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:scrollbarAlwaysDrawVerticalTrack="true">
     android:label="un dia";
+    tools:context="com.edu.freelancer.horaryumss.Actividad1">
 
     <RelativeLayout
         android:layout_width="fill_parent"

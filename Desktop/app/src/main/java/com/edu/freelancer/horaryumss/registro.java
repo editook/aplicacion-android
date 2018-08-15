@@ -11,6 +11,9 @@ import java.io.InputStreamReader;
 
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by Eduard on 6/7/2018.
  */
@@ -21,6 +24,7 @@ public class registro {
     InputStreamReader lectura;
     OutputStreamWriter escritura;
     public int tamanio;
+    private String error;
     public CodeSearch solucion;
     Activity Actividad;
     public registro(Activity a){
@@ -121,6 +125,9 @@ public class registro {
     }
 
     public void registrarClases(ArrayList<String> listaElementos,String dia) {
+        if(!listaElementos.isEmpty()){
+
+
         ArrayList<String>nuevaLista=new ArrayList<>();
         cargar_datos_por_dia(dia);
         for(int i=0;i<listaMaterias.size();i++){
@@ -150,11 +157,37 @@ public class registro {
         catch (Exception e){
 
         }
-
+        }
     }
 
     public boolean expresionDatos(String m, String h, String a) {
+        Pattern patternMateria = Pattern.compile("[A-Za-z0-9_ ]+");
+        Pattern patternHora = Pattern.compile("[0-9:]");
+        Pattern patternAula = Pattern.compile("[A-Za-z0-9_ ]+");
+        Matcher matcher=patternMateria.matcher(m);
+        if(matcher.find()){
+            matcher=patternHora.matcher(h);
+            if(matcher.find()){
+                matcher=patternAula.matcher(a);
+                if (matcher.find()){
+                    return true;
+                }
+                else{
+                    error="AULA";
+                }
+            }
+            else{
+                error="HORA";
+            }
+        }
+        else{
+            error="MATERIA";
+        }
+        return false;
+    }
 
-        return true;
+    public String getError() {
+
+        return error;
     }
 }

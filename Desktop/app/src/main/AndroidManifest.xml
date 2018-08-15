@@ -26,11 +26,19 @@
         <activity
             android:name=".Actividad1"
             android:label="dia"
-            />
+            android:parentActivityName=".Actividad0">
+            <meta-data
+                android:name="android.suport.PARENT_ACTIVITY"
+                android:value=".Actividad0"/>
+        </activity>
         <activity
             android:name=".Actividad2"
-            android:label="dia"
-            />
+            android:label="Nuevo"
+            android:parentActivityName=".Actividad1">
+            <meta-data
+                android:name="android.suport.PARENT_ACTIVITY"
+                android:value=".Actividad1"/>
+        </activity>
         <activity
             android:name=".Actividadcamara"
             android:label="camara"

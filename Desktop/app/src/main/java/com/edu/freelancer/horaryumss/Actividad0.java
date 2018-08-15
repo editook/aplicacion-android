@@ -22,9 +22,11 @@ public class Actividad0 extends AppCompatActivity implements NavigationView.OnNa
     registro datos;
     private CircleMenu circleMenu;
     ListView listaELementos;
+    Actividad0 actividad;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        actividad=this;
         //configuraciones de esta actividad
         setContentView(R.layout.activity_actividad0);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -34,7 +36,7 @@ public class Actividad0 extends AppCompatActivity implements NavigationView.OnNa
 
         setSupportActionBar(toolbar);
         //configuracion Aplicacion
-        datos=new registro(this);
+        datos=new registro(actividad);
 
         //configuraciones de panel izquierdo
 
@@ -43,7 +45,7 @@ public class Actividad0 extends AppCompatActivity implements NavigationView.OnNa
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(actividad);
         cargarListaElementos();
         menu_opciones();
 
@@ -65,7 +67,9 @@ public class Actividad0 extends AppCompatActivity implements NavigationView.OnNa
                         Log.println(Log.DEBUG,"dia actual ",datos.solucion.getDia_porValor(index));
                         Intent actividad=new Intent(Actividad0.this,Actividad1.class);
                         actividad.putExtra("AcConSecDia2134",datos.solucion.getDia_porValor(index));
+
                         startActivity(actividad);
+
                     }
 
                 });
