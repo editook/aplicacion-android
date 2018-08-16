@@ -8,11 +8,11 @@
         android:orderInCategory="100"
         android:title="Modificar"
         app:showAsAction="always"
-        android:icon="@drawable/ic_menu_share"/>
+        android:icon="@drawable/modificar"/>
     <item
         android:id="@+id/eliminar"
         android:orderInCategory="100"
         android:title="Eliminar"
         app:showAsAction="always"
-        android:icon="@drawable/ic_menu_send"/>
+        android:icon="@drawable/eliminar"/>
 </menu>

@@ -7,11 +7,10 @@
 
     <ImageView
         android:id="@+id/imagen"
-        android:layout_width="321dp"
-        android:layout_height="213dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="119dp"
         android:focusable="true"
         app:srcCompat="@drawable/side_nav_bar"
         tools:ignore="MissingConstraints"

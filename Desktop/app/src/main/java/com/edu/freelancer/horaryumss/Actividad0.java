@@ -18,6 +18,8 @@ import com.hitomi.cmlibrary.OnMenuSelectedListener;
 
 import java.io.IOException;
 
+import static android.graphics.Color.TRANSPARENT;
+
 public class Actividad0 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     registro datos;
     private CircleMenu circleMenu;
@@ -54,7 +56,7 @@ public class Actividad0 extends AppCompatActivity implements NavigationView.OnNa
     private void menu_opciones(){
 
         circleMenu = findViewById(R.id.circle_menu);
-        circleMenu.setMainMenu(Color.BLACK,R.drawable.menu3,R.drawable.menu4)
+        circleMenu.setMainMenu(R.color.transparente,R.drawable.menu1,R.drawable.menu3)
                 .addSubMenu(Color.WHITE,R.drawable.lunes)
                 .addSubMenu(Color.WHITE,R.drawable.martes)
                 .addSubMenu(Color.WHITE,R.drawable.miercoles)

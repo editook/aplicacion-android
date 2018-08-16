@@ -4,6 +4,7 @@ package com.edu.freelancer.horaryumss;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -40,6 +41,7 @@ public class registro {
     public void cargar_datos_por_dia(String dia){//solo de un dia es especial
         String nombre_dia=dia;
         String dato_lectura;
+        clear();
         //Log.println(Log.DEBUG,"dia ",nombre_dia);
         try {
             InputStreamReader archivo=new InputStreamReader(Actividad.openFileInput(nombre_dia));
@@ -49,7 +51,7 @@ public class registro {
                 while((dato_lectura=leer.readLine())!=null){
                     String []grupo=dato_lectura.split(";");// materia,hora,aula,imagen,dia
                     listaMaterias.add(grupo[0]);
-                    listahoras.add("Hora : "+grupo[1]+solucion.getestadoSegunDia(grupo[1]));
+                    listahoras.add("Hora : "+grupo[1]); //+solucion.getestadoSegunDia(grupo[1]));
                     listaAulas.add("Aula : "+grupo[2]);
                     listaImagenes.add(solucion.getImagen_materia(grupo[0]));
                     listaDias.add(" ");
@@ -72,6 +74,7 @@ public class registro {
     }
     public void cargarDatos_por_semana(){//datos hasta 1 semana-> 6 dias
         String dato_lectura;
+        clear();
         ArrayList<String> diasRecogidos=solucion.getFin_del_dia();
             for(String dia:diasRecogidos) {
 
@@ -84,7 +87,7 @@ public class registro {
                             if(dia.equals(solucion.dia_actual)){
                                 if(solucion.Zona_Horaria(grupo[1])){
                                     listaMaterias.add(grupo[0]);
-                                    listahoras.add("Hora : "+grupo[1]+solucion.getestadoSegunDia(grupo[1]));
+                                    listahoras.add("Hora : "+grupo[1]);//+solucion.getestadoSegunDia(grupo[1]));
                                     listaAulas.add("Aula : "+grupo[2]);
                                     listaImagenes.add(solucion.getImagen_materia(grupo[0]));
                                     listaDias.add("Dia : "+dia);
@@ -92,7 +95,7 @@ public class registro {
                             }
                             else{
                                 listaMaterias.add(grupo[0]);
-                                listahoras.add("Hora : "+grupo[1]+solucion.getestadoSegunDia(grupo[1]));
+                                listahoras.add("Hora : "+grupo[1]);//+solucion.getestadoSegunDia(grupo[1]));
                                 listaAulas.add("Aula : "+grupo[2]);
                                 listaImagenes.add(solucion.getImagen_materia(grupo[0]));
                                 listaDias.add("Dia : "+dia);
@@ -126,37 +129,35 @@ public class registro {
 
     public void registrarClases(ArrayList<String> listaElementos,String dia) {
         if(!listaElementos.isEmpty()){
-
-
         ArrayList<String>nuevaLista=new ArrayList<>();
         cargar_datos_por_dia(dia);
         for(int i=0;i<listaMaterias.size();i++){
             nuevaLista.add(listaMaterias.get(i)+";"+listahoras.get(i)+";"+listaAulas.get(i));
         }
-        try {
-            OutputStreamWriter archivo=new OutputStreamWriter(Actividad.openFileOutput(dia,Context.MODE_PRIVATE));
-            String []datos;
-            String formateo;
-            if(!nuevaLista.isEmpty()){//copiando datos existentes
-                for(int i=0;i<nuevaLista.size();i++){
-                    datos=listaElementos.get(i).split(";");
-                    formateo=solucion.Mayuscula_guardar(datos);
-                    archivo.write(formateo+"\n");
+            try {
+                OutputStreamWriter archivo=new OutputStreamWriter(Actividad.openFileOutput(dia,Context.MODE_PRIVATE));
+                String []datos;
+                String formateo;
+                if(!nuevaLista.isEmpty()){//copiando datos existentes
+                    for(int i=0;i<nuevaLista.size();i++){
+                        datos=nuevaLista.get(i).split(";");
+                        formateo=solucion.Mayuscula_guardar(datos);
+                        archivo.write(formateo+"\n");
+                    }
                 }
-            }
-            if(archivo!=null){
-                for (int i=0;i<listaElementos.size();i++){
-                    //guardar con Mayuscula
-                    datos=listaElementos.get(i).split(";");
-                    formateo=solucion.Mayuscula_guardar(datos);
-                    archivo.write(formateo+"\n");
+                if(archivo!=null){
+                    for (int i=0;i<listaElementos.size();i++){
+                        //guardar con Mayuscula
+                        datos=listaElementos.get(i).split(";");
+                        formateo=solucion.Mayuscula_guardar(datos);
+                        archivo.write(formateo+"\n");
+                    }
                 }
+                archivo.close();
             }
-            archivo.close();
-        }
-        catch (Exception e){
+            catch (Exception e){
 
-        }
+            }
         }
     }
 
@@ -189,5 +190,99 @@ public class registro {
     public String getError() {
 
         return error;
+    }
+
+    public void eliminarDato(String diaEspecifico, int posicionSeleccionado) {
+
+        if(posicionSeleccionado!=-1){
+
+            cargar_datos_por_dia(diaEspecifico);
+            for (int i=0;i<listaMaterias.size();i++){
+                if(i==posicionSeleccionado){
+                    listaMaterias.remove(i);
+                    listaAulas.remove(i);
+                    listahoras.remove(i);
+                    listaDias.remove(i);
+                    ArrayList<String>nuevaLista=new ArrayList<>();
+                    for (int j=0;j<listaMaterias.size();j++){
+                        nuevaLista.add(listaMaterias.get(j)+";"+listahoras.get(j)+";"+listaAulas.get(j));
+                    }
+                    try {
+                        OutputStreamWriter archivo=new OutputStreamWriter(Actividad.openFileOutput(diaEspecifico,Context.MODE_PRIVATE));
+                        String []datos;
+                        String formateo;
+                        if(!nuevaLista.isEmpty()){//copiando datos existentes
+                            for(int k=0;k<nuevaLista.size();k++){
+                                datos=nuevaLista.get(k).split(";");
+                                formateo=solucion.Mayuscula_guardar(datos);
+                                archivo.write(formateo+"\n");
+                            }
+                        }
+                        archivo.close();
+                    }
+                    catch (Exception e){
+                    }
+                    Toast.makeText(Actividad,"Eliminado", Toast.LENGTH_LONG).show();
+                    break;
+                }
+
+            }
+        }
+
+        cargar_datos_por_dia(diaEspecifico);
+    }
+    public void clear(){
+        listaAulas.clear();
+        listahoras.clear();
+        listaMaterias.clear();
+        listaAulas.clear();
+        listaImagenes.clear();
+    }
+    public void modificarElemento(String diaEspecifico,int posicion) {
+        if (posicion!=-1) {
+            cargar_datos_por_dia(diaEspecifico);
+            for (int i=0;i<listaMaterias.size();i++){
+                if(posicion==i){
+                    dato_actual.ma_ho_au=listaMaterias.get(i)+";"+listahoras.get(i).split(": ")[1]+";"+listaAulas.get(i).split(": ")[1];
+                    dato_actual.posicionModificacion=posicion;
+                    break;
+                }
+            }
+
+        }
+    }
+    public void modificarElemento(String elemento,String dia) {
+        String[]element=elemento.split(";");
+        if(element!=null){
+            ArrayList<String>nuevaLista=new ArrayList<>();
+            cargar_datos_por_dia(dia);
+            for(int i=0;i<listaMaterias.size();i++){
+                if(dato_actual.posicionModificacion==i){
+                    listaMaterias.set(i,element[0]);
+                    listahoras.set(i,element[1]);
+                    listaAulas.set(i,element[2]);
+                    break;
+                }
+            }
+            for(int i=0;i<listaMaterias.size();i++){
+                nuevaLista.add(listaMaterias.get(i)+";"+listahoras.get(i)+";"+listaAulas.get(i));
+            }
+            try {
+                OutputStreamWriter archivo=new OutputStreamWriter(Actividad.openFileOutput(dia,Context.MODE_PRIVATE));
+                String []datos;
+                String formateo;
+                if(!nuevaLista.isEmpty()){//copiando datos existentes
+                    for(int i=0;i<nuevaLista.size();i++){
+                        datos=nuevaLista.get(i).split(";");
+                        formateo=solucion.Mayuscula_guardar(datos);
+                        archivo.write(formateo+"\n");
+                    }
+                }
+                archivo.close();
+            }
+            catch (Exception e){
+
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.edu.freelancer.horaryumss;
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -42,7 +43,7 @@ public class Actividad1 extends AppCompatActivity{//dia especifico de la semana
         super.onCreate(instancia);
         setContentView(layout.activity_menu_dias);
         agregarActionBar();
-
+        posicionSeleccionado=-1;
         datos=new registro(this);
         try {
             parametro=getIntent().getExtras();
@@ -57,6 +58,9 @@ public class Actividad1 extends AppCompatActivity{//dia especifico de la semana
                 accionButtonCrear();
             }
         });
+        int color=getResources().getColor(R.color.verde);
+        ColorStateList cl=new ColorStateList(new int[][]{new int[0]},new int[]{color});
+        buttonAdd.setBackgroundTintList(cl);
         listaELementos=findViewById(id.Lista_de_Datos_dia);
         cargarListaElementos();
     }
@@ -79,9 +83,7 @@ public class Actividad1 extends AppCompatActivity{//dia especifico de la semana
         //Actividad1.this.startActivity(new Intent(Actividad1.this,Actividad2.class));
         Intent actividad=new Intent(Actividad1.this,Actividad2.class);
         actividad.putExtra("AcConSecDia2134",diaEspecifico);
-
         startActivity(actividad);
-
     }
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.eliminar_modificar,menu);
@@ -89,13 +91,19 @@ public class Actividad1 extends AppCompatActivity{//dia especifico de la semana
     }
     public boolean onOptionsItemSelected(MenuItem menuItem){
         int id=menuItem.getItemId();
-
         if(id==R.id.eliminar){
-            Toast.makeText(Actividad1.this,"eliminar", Toast.LENGTH_LONG).show();
+
+            datos.eliminarDato(diaEspecifico,posicionSeleccionado);
+            Lista_Elementos LE=new Lista_Elementos(this,datos.getlista_materias(),datos.getlista_horas(),datos.getlista_imagenes(),datos.getlista_aulas(),datos.getlista_dias());
+            listaELementos.setAdapter(LE);
             return true;
         }
         if(id==R.id.modificar){
-            Toast.makeText(Actividad1.this,"modificar", Toast.LENGTH_LONG).show();
+            if(posicionSeleccionado!=-1){
+                datos.modificarElemento(diaEspecifico,posicionSeleccionado);
+                accionButtonCrear();
+            }
+
             return true;
         }
         return super.onOptionsItemSelected(menuItem);
@@ -111,11 +119,16 @@ public class Actividad1 extends AppCompatActivity{//dia especifico de la semana
 
                 if(posicionSeleccionado==position){
                     listaELementos.getChildAt(position).setBackgroundColor(Color.WHITE);
+                    posicionSeleccionado=-1;
                 }
                 else{
                     posicionSeleccionado=position;
+                    if(posicionSeleccionado!=-1){
+                        listaELementos.getChildAt(posicionSeleccionado).setBackgroundColor(Color.WHITE);
+                    }
+                    listaELementos.getChildAt(position).setBackgroundColor(Color.LTGRAY);
                 }
-                listaELementos.getChildAt(position).setBackgroundColor(Color.LTGRAY);
+
             }
         });
 

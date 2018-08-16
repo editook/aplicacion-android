@@ -32,11 +32,13 @@ public class Actividad2 extends AppCompatActivity {
     ArrayList<String>listaElementos;
     Bundle parametro;
     String diaEspecifico;
+    int estadoEntrada;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actividad_agregar_materia2);
         agregarActionBar();
+        estadoEntrada=0;
         materia_entrada=findViewById(R.id.materia_input);
         aula_entrada=findViewById(R.id.aula_input);
         hora_entrada=findViewById(R.id.hora_input);
@@ -44,19 +46,37 @@ public class Actividad2 extends AppCompatActivity {
         agregar=findViewById(R.id.agregar);
         aceptar=findViewById(R.id.aceptar);
         data=new registro(this);
+        parametro=getIntent().getExtras();
+        diaEspecifico=parametro.getString("AcConSecDia2134");
+        configuracionBotones();
 
-            parametro=getIntent().getExtras();
-            diaEspecifico=parametro.getString("AcConSecDia2134");
-
-        aceptarBoton();
-        agregarBoton();
         seleccionarHora();
         listaElementos=new ArrayList<>();
         hora_entrada.setInputType(InputType.TYPE_DATETIME_VARIATION_NORMAL);
 
         dato_actual.dia_actual=diaEspecifico;
+        cargarDatosParametro_existentes();
 
     }
+
+    private void configuracionBotones() {
+        aceptarBoton();
+        agregarBoton();
+        if(!dato_actual.ma_ho_au.isEmpty()){
+            estadoEntrada=1;
+            agregar.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void cargarDatosParametro_existentes() {
+
+        String[]datos_almacenados=dato_actual.get_materia_hora_aula();
+        dato_actual.ma_ho_au="";
+        materia_entrada.setText(datos_almacenados[0]);
+        hora_entrada.setText(datos_almacenados[1]);
+        aula_entrada.setText(datos_almacenados[2]);
+    }
+
     private void agregarActionBar() {
         ActionBar accion=getSupportActionBar();
         accion.setDisplayHomeAsUpEnabled(true);
@@ -75,11 +95,27 @@ public class Actividad2 extends AppCompatActivity {
         aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                    if(estadoEntrada==1){
+                        String m,h,a;
+                        m=materia_entrada.getText().toString();
+                        h=hora_entrada.getText().toString();
+                        a=aula_entrada.getText().toString();
+                        if(data.expresionDatos(m,h,a)){
+                            data.modificarElemento(m+";"+h+";"+a,diaEspecifico);
+                        }
+                        else{
+                            String dato=data.getError();
+                            Toast.makeText(Actividad2.this,"!Error en la escritura: "+dato, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    else {
+                        data.registrarClases(listaElementos,diaEspecifico);
 
-                    data.registrarClases(listaElementos,diaEspecifico);
-                    Intent act=new Intent(Actividad2.this,Actividad1.class);
-                    act.putExtra("AcConSecDia2134",diaEspecifico);
-                    startActivity(act);
+                    }
+                Intent act=new Intent(Actividad2.this,Actividad1.class);
+                act.putExtra("AcConSecDia2134",diaEspecifico);
+                startActivity(act);
+
             }
         });
     }
